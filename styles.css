@@ -110,21 +110,54 @@ section h2 {
     transform: scale(1.1);
 }
 
-/* Form Styles */
+/* Contact Section */
+#contact {
+    background: #1d1d1f;
+    color: #ffffff;
+}
+
+#contact h2 {
+    color: #ffffff;
+}
+
 #contact form input,
 #contact form textarea {
-    background-color: #ffffff;
-    border: 1px solid #d2d2d7;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
-    color: #1d1d1f;
+    color: #ffffff;
     padding: 16px;
     transition: all 0.3s ease;
 }
 
+#contact form input::placeholder,
+#contact form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
 #contact form input:focus,
 #contact form textarea:focus {
+    background-color: rgba(255, 255, 255, 0.15);
     border-color: #0071e3;
-    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
+    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
+}
+
+.btn-primary {
+    background-color: #0071e3;
+    border: none;
+    border-radius: 980px;
+    padding: 12px 24px;
+    font-size: 17px;
+    line-height: 1.47059;
+    letter-spacing: -0.022em;
+    min-width: 160px;
+    transition: all 0.3s ease;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #0077ED;
+    transform: scale(1.02);
 }
 
 /* Responsive Typography */
