@@ -46,11 +46,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Form submission (placeholder - replace with actual form handling)
-    const contactForm = document.querySelector('#contact form');
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Thank you for your message! I will get back to you soon.');
-        contactForm.reset();
-    });
+    // Contact form handling
+    const form = document.querySelector('#contact form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Thanks for your message! I will get back to you soon.');
+                form.reset();
+            })
+            .catch(error => {
+                alert('Oops! There was a problem submitting your form. Please try again.');
+                console.error(error);
+            });
+        });
+    }
 });

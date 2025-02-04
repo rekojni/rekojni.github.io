@@ -142,7 +142,7 @@
             <h2 class="text-center mb-4">Contact Me</h2>
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    <form action="https://formspree.io/f/mvgzrnjl" method="POST">
+                    <form id="contactForm" action="https://formspree.io/f/mvgzrnjl" method="POST" accept-charset="UTF-8">
                         <div class="mb-3">
                             <input type="text" name="name" class="form-control" placeholder="Your Name" required>
                         </div>
@@ -152,6 +152,7 @@
                         <div class="mb-3">
                             <textarea name="message" class="form-control" rows="5" placeholder="Your Message" required></textarea>
                         </div>
+                        <input type="hidden" name="_subject" value="New contact form submission">
                         <button type="submit" class="btn btn-primary w-100">Send Message</button>
                     </form>
                     <p class="text-center mt-3">
