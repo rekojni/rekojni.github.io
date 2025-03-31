@@ -1,36 +1,70 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Dynamic title typing effect
-    const titles = [
-        'Strategic Business Planning',
-        'Digital Business Professional',
-        'Banking Specialist',
-        'Process Optimization Expert'
-    ];
+    // Target the element where the dynamic title will be displayed
     const dynamicTitleElement = document.getElementById('dynamic-title');
-    let currentTitleIndex = 0;
-    let isDeleting = false;
-    let typingSpeed = 100;
-    let pauseDuration = 2000;
-
-    function typeTitle() {
-        const currentTitle = titles[currentTitleIndex];
-        let displayText = isDeleting 
-            ? currentTitle.slice(0, dynamicTitleElement.textContent.length - 1)
-            : currentTitle.slice(0, dynamicTitleElement.textContent.length + 1);
+    
+    // Check if the element exists before proceeding
+    if (dynamicTitleElement) {
+        // Array of titles to cycle through
+        const titles = [
+            'Strategic Business Planning',
+            'Digital Business Professional',
+            'Banking Specialist',
+            'Process Optimization Expert'
+        ];
         
-        dynamicTitleElement.textContent = displayText;
+        // State variables for the typing animation
+        let currentTitleIndex = 0; // Index of the current title in the array
+        let isDeleting = false;    // Flag to indicate if currently deleting text
+        let typingSpeed = 100;     // Speed of typing characters (ms)
+        let deletingSpeed = 50;    // Speed of deleting characters (ms) - often faster
+        let pauseDuration = 1800;  // Pause duration after a title is fully typed (ms)
+        let nextWordDelay = 500;   // Small delay before starting to type the next word (ms)
 
-        if (!isDeleting && displayText === currentTitle) {
-            setTimeout(() => { isDeleting = true; }, pauseDuration);
-        } else if (isDeleting && displayText === '') {
-            isDeleting = false;
-            currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+        // The main function to handle the typing animation logic
+        function typeTitle() {
+            // Get the full text of the current title
+            const currentTitle = titles[currentTitleIndex];
+            // Get the currently displayed text length
+            const currentLength = dynamicTitleElement.textContent.length;
+            // Determine the timeout duration for the next step
+            let timeoutSpeed;
+
+            if (isDeleting) {
+                // --- Deleting Logic ---
+                // Remove the last character
+                dynamicTitleElement.textContent = currentTitle.slice(0, currentLength - 1);
+                // Set the speed for the next deletion step
+                timeoutSpeed = deletingSpeed;
+
+                // Check if deletion is complete
+                if (dynamicTitleElement.textContent === '') {
+                    // Finished deleting this title
+                    isDeleting = false; // Switch state to typing
+                    currentTitleIndex = (currentTitleIndex + 1) % titles.length; // Move to the next title index
+                    timeoutSpeed = nextWordDelay; // Add a small delay before typing the new title
+                }
+            } else {
+                // --- Typing Logic ---
+                // Add the next character
+                dynamicTitleElement.textContent = currentTitle.slice(0, currentLength + 1);
+                // Set the speed for the next typing step
+                timeoutSpeed = typingSpeed;
+
+                // Check if typing is complete for the current title
+                if (dynamicTitleElement.textContent === currentTitle) {
+                    // Finished typing this title
+                    isDeleting = true; // Switch state to deleting
+                    timeoutSpeed = pauseDuration; // Pause before starting to delete
+                }
+            }
+
+            // Schedule the next call to this function after the calculated timeout
+            setTimeout(typeTitle, timeoutSpeed);
         }
 
-        setTimeout(typeTitle, isDeleting ? typingSpeed / 2 : typingSpeed);
-    }
-
-    typeTitle();
+        // Start the typing animation
+        typeTitle();
+    } // End if(dynamicTitleElement)
 
     // Smooth scrolling for navigation links
     document.querySelectorAll('a.nav-link').forEach(anchor => {
@@ -40,11 +74,54 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
             
-            targetSection.scrollIntoView({
-                behavior: 'smooth'
-            });
+            // Check if the target section exists before scrolling
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
         });
     });
+
+    // Contact form handling
+    const form = document.getElementById('contactForm'); // Use getElementById for better performance
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                // Check if the response indicates success (Formspree might return ok: true)
+                if (response.ok) {
+                    // Display a success message (consider using a less intrusive method than alert)
+                    alert('Thanks for your message! I will get back to you soon.'); 
+                    form.reset(); // Reset the form fields
+                } else {
+                    // Handle potential errors from the server side
+                    response.json().then(data => {
+                        // Log the error data if available
+                        console.error('Form submission error:', data);
+                        alert('Oops! There was a problem submitting your form. Please try again.');
+                    }).catch(error => {
+                        // Handle cases where the response is not JSON
+                        console.error('Form submission error, non-JSON response:', error);
+                        alert('Oops! There was a problem submitting your form. Please try again.');
+                    });
+                }
+            })
+            .catch(error => {
+                // Handle network errors
+                console.error('Network error during form submission:', error);
+                alert('Oops! There was a network problem submitting your form. Please check your connection and try again.');
+            });
+        });
+    } // End if(form)
 
     // Back to Top Button Logic
     const backToTopButton = document.getElementById('back-to-top-btn');
@@ -66,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Contact form handling with integrated feedback
-    const form = document.getElementById('contactForm'); 
     const formFeedback = document.getElementById('form-feedback');
 
     if (form && formFeedback) { 
