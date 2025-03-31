@@ -69,21 +69,46 @@ document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling for navigation links
     const navbar = document.querySelector('.navbar.fixed-top'); // Get the navbar element
     const navbarHeight = navbar ? navbar.offsetHeight : 0; // Get its height, default to 0 if not found
+    const navbarNav = document.getElementById('navbarNav'); // Get the collapsible element
+
+    // Function to handle the scroll calculation and execution
+    function scrollToSection(targetId) {
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            const targetPosition = targetSection.offsetTop - navbarHeight;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    }
 
     document.querySelectorAll('a.nav-link').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             
             const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-          
-            if (targetSection) {
-                const targetPosition = targetSection.offsetTop - navbarHeight;
 
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+            // Check if the click is inside the open mobile menu
+            const isMobileMenuOpen = navbarNav && navbarNav.classList.contains('show');
+            const isInsideMobileMenu = navbarNav && navbarNav.contains(this);
+
+            if (isMobileMenuOpen && isInsideMobileMenu) {
+                // If mobile menu is open, hide it first, then scroll after a delay
+                const collapseInstance = bootstrap.Collapse.getInstance(navbarNav);
+                if (collapseInstance) {
+                    collapseInstance.hide();
+                    // Wait for collapse animation (approx 350ms) + small buffer
+                    setTimeout(() => {
+                        scrollToSection(targetId);
+                    }, 360); 
+                } else {
+                     // Fallback if instance not found, scroll immediately (less ideal)
+                     scrollToSection(targetId); 
+                }
+            } else {
+                // If not mobile menu or menu closed, scroll immediately
+                 scrollToSection(targetId);
             }
         });
     });
