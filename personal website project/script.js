@@ -46,12 +46,38 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Contact form handling
-    const form = document.querySelector('#contact form');
-    if (form) {
+    // Back to Top Button Logic
+    const backToTopButton = document.getElementById('back-to-top-btn');
+    const scrollThreshold = 200; // Pixels scrolled before button appears
+
+    if (backToTopButton) {
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // Contact form handling with integrated feedback
+    const form = document.getElementById('contactForm'); 
+    const formFeedback = document.getElementById('form-feedback');
+
+    if (form && formFeedback) { 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+            formFeedback.innerHTML = ''; 
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Sending...'; 
+
             fetch(form.action, {
                 method: 'POST',
                 body: new FormData(form),
@@ -59,14 +85,29 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Accept': 'application/json'
                 }
             })
-            .then(response => response.json())
-            .then(data => {
-                alert('Thanks for your message! I will get back to you soon.');
-                form.reset();
+            .then(response => {
+                if (response.ok) {
+                    formFeedback.innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert">Thanks for your message! I will get back to you soon.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+                    form.reset();
+                } else {
+                    response.json().then(data => {
+                        let errorMessage = 'Oops! There was a problem submitting your form.';
+                        if (data && data.errors) {
+                            errorMessage += ` Error: ${data.errors.map(e => e.message).join(', ')}`;
+                        }
+                        formFeedback.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert">${errorMessage}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+                    }).catch(() => {
+                        formFeedback.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert">Oops! An unknown error occurred. Please try again.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+                    });
+                }
             })
             .catch(error => {
-                alert('Oops! There was a problem submitting your form. Please try again.');
-                console.error(error);
+                console.error('Form submission network error:', error);
+                formFeedback.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert">Oops! A network error occurred. Please check your connection and try again.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+            })
+            .finally(() => {
+                 submitButton.disabled = false; 
+                 submitButton.innerHTML = originalButtonText; 
             });
         });
     }
