@@ -312,6 +312,11 @@ main .bg-light > *:last-child {
     }
 }
 
+/* Education Card Title Alignment */
+section#education .card-title {
+    min-height: 3.5em; /* Adjust value as needed for consistent title height */
+}
+
 /* Footer */
 footer {
     background-color: #1d1d1f;
