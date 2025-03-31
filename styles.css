@@ -72,33 +72,6 @@ section h2 {
     color: #86868b;
 }
 
-/* Profile Image */
-.profile-img-wrapper {
-    max-width: 320px;
-    margin: 0 auto;
-    padding: 20px;
-    background: linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
-    border-radius: 24px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.profile-img-wrapper:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
-}
-
-.profile-img {
-    width: 100%;
-    height: auto;
-    border-radius: 16px;
-    transition: transform 0.3s ease;
-}
-
-.profile-img:hover {
-    transform: scale(1.02);
-}
-
 /* Social Links */
 .social-links a {
     color: #1d1d1f !important;
