@@ -3,17 +3,17 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
     line-height: 1.47059;
     letter-spacing: -0.022em;
-    margin-top: 56px;
+    margin-top: 56px; /* Adjust if navbar height changes */
     color: #1d1d1f;
     background-color: #ffffff;
 }
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(180deg, #fbfbfd 0%, #fff 100%);
+    background: #1d1d1f; /* Changed to dark background */
     height: 100vh;
     position: relative;
-    color: #1d1d1f;
+    color: #f5f5f7; /* Changed default text color to light */
 }
 
 .hero::before {
@@ -27,13 +27,13 @@ body {
 
 .hero h1 {
     font-weight: 600;
-    color: #1d1d1f;
+    color: #f5f5f7; /* Changed H1 color to light */
     letter-spacing: -0.045em;
 }
 
 .hero .lead {
     font-size: 1.5rem;
-    color: #86868b;
+    color: #a1a1a6; /* Changed lead color to a slightly dimmer light grey */
     min-height: 2em; /* Prevent collapse during text deletion */
     /* Optional: Adjust margin if needed to maintain spacing */
     /* margin-bottom: 1rem; */ 
@@ -77,13 +77,12 @@ section h2 {
 
 /* Social Links */
 .social-links a {
-    color: #1d1d1f !important;
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .social-links a:hover {
-    color: #0071e3 !important;
     transform: scale(1.1);
+    color: #ffffff; /* Make slightly brighter on hover */
 }
 
 /* About Section */

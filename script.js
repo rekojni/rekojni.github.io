@@ -67,16 +67,21 @@ document.addEventListener('DOMContentLoaded', function() {
     } // End if(dynamicTitleElement)
 
     // Smooth scrolling for navigation links
+    const navbar = document.querySelector('.navbar.fixed-top'); // Get the navbar element
+    const navbarHeight = navbar ? navbar.offsetHeight : 0; // Get its height, default to 0 if not found
+
     document.querySelectorAll('a.nav-link').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             
             const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
-            
-            // Check if the target section exists before scrolling
+          
             if (targetSection) {
-                targetSection.scrollIntoView({
+                const targetPosition = targetSection.offsetTop - navbarHeight;
+
+                window.scrollTo({
+                    top: targetPosition,
                     behavior: 'smooth'
                 });
             }
