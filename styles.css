@@ -266,6 +266,52 @@ section h2 {
     }
 }
 
+/* Project Detail Page Spacing */
+main .bg-light h2 {
+    margin-top: 2rem; /* Add space above headings */
+    margin-bottom: 1.5rem; /* Increase space below headings */
+}
+
+main .bg-light p {
+    margin-bottom: 1.25rem; /* Increase space below paragraphs */
+    line-height: 1.7;    /* Increase line spacing within paragraphs */
+}
+
+main .bg-light ul {
+    margin-bottom: 1.25rem; /* Add space below unordered lists */
+    padding-left: 1.5rem; /* Adjust default list padding if needed */
+}
+
+main .bg-light ul li {
+    margin-bottom: 0.6rem; /* Add space between list items */
+    line-height: 1.7;    /* Increase line spacing within list items */
+}
+
+/* Adjust spacing for the first heading if needed */
+main .bg-light h1 + div > h2:first-of-type {
+    margin-top: 1rem; 
+}
+
+/* Reduce bottom margin for last element in the container */
+main .bg-light > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive adjustments if needed */
+@media (max-width: 768px) {
+    main .bg-light h2 {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    main .bg-light p,
+    main .bg-light ul {
+        margin-bottom: 1rem;
+    }
+    main .bg-light ul li {
+        margin-bottom: 0.5rem;
+    }
+}
+
 /* Footer */
 footer {
     background-color: #1d1d1f;
