@@ -34,6 +34,9 @@ body {
 .hero .lead {
     font-size: 1.5rem;
     color: #86868b;
+    min-height: 2em; /* Prevent collapse during text deletion */
+    /* Optional: Adjust margin if needed to maintain spacing */
+    /* margin-bottom: 1rem; */ 
 }
 
 /* Sections */
