@@ -217,4 +217,26 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    // Handle initial scroll adjustment if page loads with a hash
+    if (window.location.hash) {
+        // Use a minimal timeout to ensure layout is stable before calculating offsetTop
+        setTimeout(() => {
+            const hash = window.location.hash.substring(1);
+            const targetElement = document.getElementById(hash);
+            if (targetElement) {
+                const navbar = document.querySelector('.navbar.fixed-top'); // Need navbar height here too
+                const navbarHeight = navbar ? navbar.offsetHeight : 0;
+                const targetPosition = targetElement.offsetTop - navbarHeight;
+                
+                // Temporarily disable smooth scrolling for instant jump
+                document.documentElement.style.scrollBehavior = 'auto';
+                
+                window.scrollTo({ top: targetPosition, behavior: 'auto' }); // Use 'auto' for instant scroll
+                
+                // Restore default scroll behavior (allows CSS to take over again)
+                document.documentElement.style.scrollBehavior = ''; 
+            }
+        }, 10); // 10ms delay usually sufficient
+    }
 });
