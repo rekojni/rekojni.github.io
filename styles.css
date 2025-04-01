@@ -292,6 +292,15 @@ section#education .card-title {
     min-height: 3.5em; /* Adjust value as needed for consistent title height */
 }
 
+/* Project Cards Alignment Fix */
+.project-card .card-title {
+    min-height: 2.5em; /* Ensure space for ~2 lines of title text */
+}
+
+.project-card .card-body p.mt-2 { /* Target the paragraph containing skills */
+    margin-bottom: 1rem; /* Ensure consistent bottom margin before button, adjust if needed */
+}
+
 /* Footer */
 footer {
     background-color: #1d1d1f;
@@ -312,28 +321,28 @@ footer p {
     display: none; /* Hidden by default */
     width: 50px;
     height: 50px;
-    background-color: #0071e3; /* Apple blue */
-    color: white;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+    color: #fff;
     border: none;
     border-radius: 50%;
     text-align: center;
-    font-size: 20px;
-    line-height: 50px;
+    font-size: 24px; /* Adjust icon size */
+    line-height: 50px; /* Center icon vertically */
     cursor: pointer;
     z-index: 1000;
-    transition: background-color 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
     opacity: 0;
     visibility: hidden;
 }
 
-#back-to-top-btn:hover {
-    background-color: #005bb5; /* Darker blue on hover */
-}
-
 #back-to-top-btn.show {
-    display: block;
+    display: block; /* Show the button */
     opacity: 1;
     visibility: visible;
+}
+
+#back-to-top-btn:hover {
+    background-color: rgba(0, 0, 0, 0.9); /* Darken on hover */
 }
 
 /* Form Feedback Styles */

@@ -65,7 +65,7 @@
                     This project addressed significant inefficiencies within the manual, paper-based process for offshore client onboarding. As a Business Development Manager for the offshore banking segment at the time, I identified an opportunity to leverage technology to improve a time-consuming and error-prone workflow. The key outcome was the development and adoption of an interactive PDF tool that successfully automated repetitive data entry, saving considerable time and reducing errors.
                 </p>
 
-                <h2>The Challenge: Inefficiency in Manual Form Processing</h2>
+                <h2 class="mt-5">The Challenge: Inefficiency in Manual Form Processing</h2>
                 <p>
                     The existing process for opening offshore accounts involved manually completing multiple lengthy forms. This presented several challenges:
                 </p>
@@ -79,12 +79,12 @@
                      While onshore banking processes were increasingly benefiting from digitalization, this particular offshore segment still relied heavily on these manual methods, highlighting a clear area for improvement.
                 </p>
 
-                <h2>My Role & Initiative</h2>
+                <h2 class="mt-5">My Role & Initiative</h2>
                 <p>
                     Serving as a Business Development Manager for DBS Treasures Offshore, I had direct experience with this onboarding process. Witnessing the challenges faced by colleagues and understanding the potential impact on client satisfaction motivated me to seek a more efficient approach. Recognizing the opportunity for improvement, I proactively began exploring potential solutions in mid-2022 to streamline this critical workflow.
                 </p>
 
-                <h2>The Solution: Developing an Interactive PDF Tool</h2>
+                <h2 class="mt-5">The Solution: Developing an Interactive PDF Tool</h2>
                 <p>
                     My exploration led me to consider how technology could minimize repetitive tasks. After initial research into different tools and approaches, including a brief experiment with Wondershare PDF which proved unstable for the required complexity, the core concept emerged: create a "master input" system within a single PDF package.
                 </p>
@@ -95,12 +95,12 @@
                     Adobe Acrobat Pro was selected as the development tool due to its robust "Prepare Form" capabilities and proven stability. The development involved designing a user-friendly input section and meticulously mapping and naming hundreds of corresponding fields throughout the multiple forms within the PDF package to enable the auto-population functionality.
                 </p>
                 
-                <h2>Implementation & Adoption</h2>
+                <h2 class="mt-5">Implementation & Adoption</h2>
                 <p>
                     A functional prototype was created to demonstrate the concept's viability. After successfully using the tool myself, I shared it with immediate colleagues who also found it highly beneficial. Its effectiveness and ease of use led to positive word-of-mouth, and the tool was subsequently adopted more broadly within the offshore team. Feedback was consistently positive, with surveys conducted among users giving it full ratings for usefulness.
                 </p>
 
-                <h2>Results & Impact</h2>
+                <h2 class="mt-5">Results & Impact</h2>
                 <p>
                     The implementation of this interactive PDF tool yielded significant, measurable improvements:
                 </p>
@@ -113,7 +113,7 @@
                     Overall, this initiative demonstrated how understanding user needs and applying readily available technology could drive successful process improvements within the existing operational framework.
                 </p>
 
-                <h2>Skills Demonstrated</h2>
+                <h2 class="mt-5">Skills Demonstrated</h2>
                  <p>
                     This project highlighted proficiency in several key areas:
                 </p>
@@ -126,7 +126,7 @@
                     <li>Efficiency Optimization</li>
                 </ul>
 
-                <h2>Technology Used</h2>
+                <h2 class="mt-5">Technology Used</h2>
                 <ul>
                     <li>Adobe Acrobat Pro (Prepare Form feature)</li>
                 </ul>
@@ -149,6 +149,32 @@
     <!-- AOS JS (for animations) -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- Custom JS (Ensure paths are correct if moving files) -->
-    <script src="script.js"></script> 
+    <script src="script.js"></script>
+
+    <!-- Back to Top Button HTML -->
+    <button id="back-to-top-btn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Back to Top Button JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.getElementById('back-to-top-btn');
+            const scrollThreshold = 200; // Pixels scrolled before button appears
+
+            if (backToTopButton) {
+                window.addEventListener('scroll', () => {
+                    if (window.pageYOffset > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+                        backToTopButton.classList.add('show');
+                    } else {
+                        backToTopButton.classList.remove('show');
+                    }
+                });
+
+                backToTopButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
