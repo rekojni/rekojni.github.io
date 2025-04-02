@@ -338,7 +338,7 @@ footer p {
 }
 
 #back-to-top-btn.show {
-    display: block; /* Show the button */
+    display: flex; /* Show the button AND maintain flex properties */
     opacity: 1;
     visibility: visible;
 }
