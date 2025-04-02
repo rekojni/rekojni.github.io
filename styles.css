@@ -325,9 +325,11 @@ footer p {
     color: #fff;
     border: none;
     border-radius: 50%;
-    text-align: center;
+    /* Use Flexbox for robust centering */
+    display: flex;
+    align-items: center; /* Vertical center */
+    justify-content: center; /* Horizontal center */
     font-size: 24px; /* Adjust icon size */
-    line-height: 50px; /* Center icon vertically */
     cursor: pointer;
     z-index: 1000;
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
