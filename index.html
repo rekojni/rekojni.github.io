@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Personal portfolio website for Chun Onn Woo, a banking professional specializing in strategic business planning and digital business. Explore experience, projects, and contact information.">
     
-    <!-- Basic Security Headers -->
+    <!-- Security Headers -->
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer-policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://formspree.io;">
 
     <!-- SEO / Social Sharing Meta Tags -->
     <meta property="og:title" content="Chun Onn Woo - Personal Website">
     <meta property="og:description" content="Strategic Business Planning | Digital Business | Banking Professional">
     <meta property="og:image" content="images/profile.webp"> <!-- Update with actual URL later -->
-    <meta property="og:url" content="https://your-domain.com"> <!-- Update with actual URL later -->
+    <meta property="og:url" content="https://rekojni.github.io/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Chun Onn Woo - Personal Website">
@@ -26,14 +27,18 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link href="styles.css" rel="stylesheet">
+    <!-- Custom CSS (minified) -->
+    <link href="styles.min.css" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" 
           integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <!-- AOS CSS (for animations) -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" 
           integrity="sha384-eFNPQeI4UMSS+y8MhPBKNwI9gxljI0mKeoNjYGh/P5YkMtbPj7i4Z/f+j9QPbk27" crossorigin="anonymous">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="styles.min.css" as="style">
+    <link rel="preload" href="script.js" as="script">
 </head>
 <body>
     <!-- Dummy comment to trigger GitHub Pages refresh -->
@@ -62,9 +67,9 @@
             <h1 class="display-4">Chun Onn Woo</h1>
             <p class="lead" id="dynamic-title">Strategic Business Planning | Digital Business | Banking Professional</p>
             <div class="social-links mt-4">
-                <a href="https://www.linkedin.com/in/chunonn-woo/" target="_blank" class="text-white mx-2" aria-label="LinkedIn Profile"><i class="fab fa-linkedin fa-2x"></i></a>
-                <a href="https://github.com/rekojni" target="_blank" class="text-white mx-2" aria-label="GitHub Profile"><i class="fab fa-github fa-2x"></i></a>
-                <a href="https://x.com/woo_onn" target="_blank" class="text-white mx-2" aria-label="X (Twitter) Profile"><i class="fab fa-x-twitter fa-2x"></i></a>
+                <a href="https://www.linkedin.com/in/chunonn-woo/" target="_blank" rel="noopener" class="text-white mx-2" aria-label="LinkedIn Profile"><i class="fab fa-linkedin fa-2x"></i></a>
+                <a href="https://github.com/rekojni" target="_blank" rel="noopener" class="text-white mx-2" aria-label="GitHub Profile"><i class="fab fa-github fa-2x"></i></a>
+                <a href="https://x.com/woo_onn" target="_blank" rel="noopener" class="text-white mx-2" aria-label="X (Twitter) Profile"><i class="fab fa-x-twitter fa-2x"></i></a>
             </div>
         </div>
     </header>
@@ -267,21 +272,30 @@
     <!-- Back to Top Button -->
     <button id="back-to-top-btn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
-    <!-- Bootstrap JS Bundle -->
+    <!-- Bootstrap JS Bundle (defer loading) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <!-- AOS JS (for animations) -->
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous" defer></script>
+    <!-- AOS JS (defer loading) -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" 
-            integrity="sha384-wQzoh0L/wY5Ymi/rFh/C3QfYJg7L+LgGq6gZ+4f7O5vG9B5FvB+2E/Sj1P6A+K0G" crossorigin="anonymous"></script>
-    <!-- Custom JS -->
-    <script src="script.js"></script> 
+            integrity="sha384-wQzoh0L/wY5Ymi/rFh/C3QfYJg7L+LgGq6gZ+4f7O5vG9B5FvB+2E/Sj1P6A+K0G" crossorigin="anonymous" defer></script>
+    <!-- Custom JS (minified, defer loading) -->
+    <script src="script.min.js" defer></script> 
 
-    <!-- Initialize AOS -->
+    <!-- Initialize AOS with minimal settings -->
     <script>
-      AOS.init({
-        duration: 800, // values from 0 to 3000, with step 50ms
-        once: true, // whether animation should happen only once - while scrolling down
+      document.addEventListener('DOMContentLoaded', function() {
+        AOS.init({
+          duration: 800,
+          once: true,
+        });
       });
+    </script>
+    
+    <!-- HTTPS Redirect for custom domains -->
+    <script>
+      if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+        location.replace(`https:${location.href.substring(location.protocol.length)}`);
+      }
     </script>
 </body>
 </html>
