@@ -68,48 +68,58 @@ document.addEventListener('DOMContentLoaded', function() {
         typeTitle();
     } // End if(dynamicTitleElement)
 
-    // ULTRA SIMPLE MOBILE NAVIGATION - NO DEPENDENCIES
+    // ULTRA SIMPLE MOBILE NAVIGATION - Bootstrap-aware, with cross-page hash fallback
     console.log('🔧 Initializing simple mobile navigation...');
     
     // 1. Handle navigation clicks
-    const allNavLinks = document.querySelectorAll('a[href^="#"]');
+    const allNavLinks = document.querySelectorAll('a[href*="#"]');
     console.log('📍 Found navigation links:', allNavLinks.length);
     
     allNavLinks.forEach((link, index) => {
         console.log(`🔗 Setting up link ${index}:`, link.href);
         
         link.addEventListener('click', function(e) {
-            e.preventDefault();
             console.log('🖱️ Link clicked:', this.href);
             
             // Get target ID
             const href = this.getAttribute('href');
-            const targetId = href.substring(1);
+            const hashIndex = href.indexOf('#');
+            if (hashIndex === -1) return; // not a hash link
+            const hash = href.substring(hashIndex);
+            if (!hash || hash === '#') return;
+            const targetId = hash.substring(1);
             const targetElement = document.getElementById(targetId);
             
             console.log('🎯 Looking for element:', targetId);
             
             if (targetElement) {
+                e.preventDefault();
                 console.log('✅ Found target element!');
                 
-                // FORCE close mobile menu
+                // Close mobile menu (prefer Bootstrap API)
                 const mobileMenu = document.getElementById('navbarNav');
                 if (mobileMenu) {
-                    mobileMenu.classList.remove('show');
-                    mobileMenu.style.display = 'none';
-                    console.log('📱 Mobile menu closed');
-                    
-                    // Force show it again for next time (but closed)
-                    setTimeout(() => {
-                        mobileMenu.style.display = '';
-                    }, 100);
+                    try {
+                        if (window.bootstrap && window.bootstrap.Collapse) {
+                            const instance = bootstrap.Collapse.getOrCreateInstance(mobileMenu, { toggle: false });
+                            instance.hide();
+                            console.log('📱 Mobile menu closed via Bootstrap');
+                        } else {
+                            mobileMenu.classList.remove('show');
+                            console.log('📱 Mobile menu closed via class');
+                        }
+                    } catch (err) {
+                        mobileMenu.classList.remove('show');
+                    }
                 }
                 
                 // Scroll to target with delay
                 setTimeout(() => {
+                    const navbar = document.querySelector('.navbar.fixed-top');
+                    const navbarHeight = navbar ? navbar.offsetHeight : 64;
                     const rect = targetElement.getBoundingClientRect();
                     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    const targetY = rect.top + scrollTop - 80; // 80px offset for navbar
+                    const targetY = rect.top + scrollTop - navbarHeight - 8; // offset for navbar
                     
                     console.log('📜 Scrolling to Y position:', targetY);
                     
@@ -120,7 +130,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 200);
                 
             } else {
-                console.log('❌ Target element not found:', targetId);
+                // If link is hash-only (e.g., "#about") but target not on this page, go to root with hash
+                const isHashOnly = href.trim().charAt(0) === '#';
+                if (isHashOnly) {
+                    e.preventDefault();
+                    const root = '/';
+                    window.location.href = `${root}${hash}`;
+                    console.log('↪️ Redirecting to root with hash:', `${root}${hash}`);
+                } else {
+                    console.log('❌ Target element not found on this page:', targetId);
+                }
             }
         });
     });
@@ -136,12 +155,15 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             console.log('🍔 Burger button clicked');
             
-            if (navMenu.classList.contains('show')) {
-                navMenu.classList.remove('show');
-                console.log('📱 Menu closed');
-            } else {
-                navMenu.classList.add('show');
-                console.log('📱 Menu opened');
+            try {
+                if (window.bootstrap && window.bootstrap.Collapse) {
+                    const instance = bootstrap.Collapse.getOrCreateInstance(navMenu);
+                    instance.toggle();
+                } else {
+                    navMenu.classList.toggle('show');
+                }
+            } catch (err) {
+                navMenu.classList.toggle('show');
             }
         });
     }
