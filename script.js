@@ -121,7 +121,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     } catch (e) {
                         // Fallback for very old browsers
                         const navbar = document.querySelector('.navbar.fixed-top');
-                        const navbarHeight = navbar ? navbar.offsetHeight : 64;
+                        let navbarHeight = navbar ? navbar.offsetHeight : 64;
+                        // Slightly smaller offset on mobile to land headers higher
+                        if (window.matchMedia && window.matchMedia('(max-width: 991px)').matches) {
+                            navbarHeight = Math.max(48, navbarHeight - 8);
+                        }
                         const rect = targetElement.getBoundingClientRect();
                         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                         const targetY = rect.top + scrollTop - navbarHeight - 8;
