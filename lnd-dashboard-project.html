@@ -108,18 +108,26 @@
         </div>
     </main> 
 
+    <!-- Back to Top Button -->
+    <button id="back-to-top-btn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>&copy; 2024 Chun Onn Woo. All rights reserved.</p>
+        </div>
+    </footer>
+
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <!-- Custom JS -->
     <script src="script.js"></script>
 
-    <!-- Back to Top Button HTML -->
-    <button id="back-to-top-btn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
-
     <!-- Back to Top Button JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Back to Top Button Logic
             const backToTopButton = document.getElementById('back-to-top-btn');
             const scrollThreshold = 200; // Pixels scrolled before button appears
 

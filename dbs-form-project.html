@@ -56,18 +56,22 @@
 
     <!-- Main Project Content -->
     <main class="container py-5 mt-5"> <!-- Added mt-5 for spacing below fixed nav -->
-        <div class="bg-light p-4 p-md-5 rounded-3 shadow-sm"> <!-- Added bg-light and padding/shadow -->
-            <div class="mb-4">
-                <a href="index.html#projects" class="btn btn-outline-secondary btn-sm">
-                    &larr; Back to Projects
-                </a>
-            </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                
+                <!-- Back to Projects Link -->
+                <div class="mb-4">
+                    <a href="index.html#projects" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-2"></i>Back to Projects</a>
+                </div>
 
-            <h1 class="display-5 fw-bold text-dark mb-4">
-                Offshore Account Opening Automation
-            </h1>
+                <!-- Content Wrapper matching lnd-dashboard-project.html -->
+                <div class="bg-light p-4 p-md-5 rounded-3 shadow-sm">
 
-            <div class="fs-5 text-body-secondary">
+                <h1 class="display-5 fw-bold text-dark mb-4">
+                    Offshore Account Opening Automation
+                </h1>
+
+                <div class="fs-5 text-body-secondary">
                 
                 <h2>Overview</h2>
                 <p>
@@ -140,16 +144,24 @@
                     <li>Adobe Acrobat Pro (Prepare Form feature)</li>
                 </ul>
 
+                <!-- Back to Projects Link (Bottom) -->
+                <div class="mt-5 text-center">
+                    <a href="index.html#projects" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-2"></i>Back to Projects</a>
+                </div>
+
+                </div> 
+
             </div>
         </div>
     </main>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top-btn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
     <!-- Footer (Copied from index.html) -->
     <footer class="bg-dark text-white text-center py-3">
         <div class="container">
             <p>&copy; 2024 Chun Onn Woo. All rights reserved.</p>
-            <!-- Back to Top Button -->
-            <button onclick="scrollToTop()" id="backToTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
         </div>
     </footer>
 
@@ -162,12 +174,10 @@
     <!-- Custom JS (Ensure paths are correct if moving files) -->
     <script src="script.js"></script>
 
-    <!-- Back to Top Button HTML -->
-    <button id="back-to-top-btn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
-
     <!-- Back to Top Button JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Back to Top Button Logic
             const backToTopButton = document.getElementById('back-to-top-btn');
             const scrollThreshold = 200; // Pixels scrolled before button appears
 
@@ -187,5 +197,6 @@
             }
         });
     </script>
+
 </body>
 </html>

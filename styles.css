@@ -316,7 +316,7 @@ footer p {
 /* Back to Top Button */
 #back-to-top-btn {
     position: fixed;
-    bottom: 30px;
+    bottom: 100px; /* Moved up from 30px to avoid footer overlap */
     right: 30px;
     display: none; /* Hidden by default */
     width: 50px;
