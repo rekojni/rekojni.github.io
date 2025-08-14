@@ -68,73 +68,85 @@ document.addEventListener('DOMContentLoaded', function() {
         typeTitle();
     } // End if(dynamicTitleElement)
 
-    // Mobile Navigation - Simplified and Robust
-    console.log('Setting up navigation...');
+    // ULTRA SIMPLE MOBILE NAVIGATION - NO DEPENDENCIES
+    console.log('🔧 Initializing simple mobile navigation...');
     
-    document.querySelectorAll('.nav-link').forEach(link => {
+    // 1. Handle navigation clicks
+    const allNavLinks = document.querySelectorAll('a[href^="#"]');
+    console.log('📍 Found navigation links:', allNavLinks.length);
+    
+    allNavLinks.forEach((link, index) => {
+        console.log(`🔗 Setting up link ${index}:`, link.href);
+        
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Nav link clicked:', this.getAttribute('href'));
+            console.log('🖱️ Link clicked:', this.href);
             
-            const targetId = this.getAttribute('href').substring(1);
+            // Get target ID
+            const href = this.getAttribute('href');
+            const targetId = href.substring(1);
             const targetElement = document.getElementById(targetId);
             
+            console.log('🎯 Looking for element:', targetId);
+            
             if (targetElement) {
-                console.log('Target element found:', targetId);
+                console.log('✅ Found target element!');
                 
-                // Close mobile menu first if it's open
-                const navbarCollapse = document.querySelector('.navbar-collapse');
-                const navbarToggler = document.querySelector('.navbar-toggler');
-                
-                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-                    console.log('Closing mobile menu...');
-                    // Force close the mobile menu
-                    navbarCollapse.classList.remove('show');
-                    navbarToggler.setAttribute('aria-expanded', 'false');
+                // FORCE close mobile menu
+                const mobileMenu = document.getElementById('navbarNav');
+                if (mobileMenu) {
+                    mobileMenu.classList.remove('show');
+                    mobileMenu.style.display = 'none';
+                    console.log('📱 Mobile menu closed');
                     
-                    // Wait a moment for menu to close, then scroll
+                    // Force show it again for next time (but closed)
                     setTimeout(() => {
-                        scrollToTarget(targetElement);
-                    }, 300);
-                } else {
-                    // Desktop or menu already closed - scroll immediately
-                    console.log('Scrolling immediately...');
-                    scrollToTarget(targetElement);
+                        mobileMenu.style.display = '';
+                    }, 100);
                 }
+                
+                // Scroll to target with delay
+                setTimeout(() => {
+                    const rect = targetElement.getBoundingClientRect();
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const targetY = rect.top + scrollTop - 80; // 80px offset for navbar
+                    
+                    console.log('📜 Scrolling to Y position:', targetY);
+                    
+                    window.scrollTo({
+                        top: targetY,
+                        behavior: 'smooth'
+                    });
+                }, 200);
+                
             } else {
-                console.log('Target element not found:', targetId);
+                console.log('❌ Target element not found:', targetId);
             }
         });
     });
     
-    // Ensure burger menu toggle works even if Bootstrap fails
-    const navbarToggler = document.querySelector('.navbar-toggler');
-    const navbarCollapse = document.querySelector('.navbar-collapse');
+    // 2. Handle burger menu toggle
+    const toggleBtn = document.querySelector('.navbar-toggler');
+    const navMenu = document.getElementById('navbarNav');
     
-    if (navbarToggler && navbarCollapse) {
-        navbarToggler.addEventListener('click', function() {
-            const isExpanded = navbarCollapse.classList.contains('show');
+    if (toggleBtn && navMenu) {
+        console.log('🍔 Setting up burger menu toggle');
+        
+        toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('🍔 Burger button clicked');
             
-            if (isExpanded) {
-                navbarCollapse.classList.remove('show');
-                navbarToggler.setAttribute('aria-expanded', 'false');
+            if (navMenu.classList.contains('show')) {
+                navMenu.classList.remove('show');
+                console.log('📱 Menu closed');
             } else {
-                navbarCollapse.classList.add('show');
-                navbarToggler.setAttribute('aria-expanded', 'true');
+                navMenu.classList.add('show');
+                console.log('📱 Menu opened');
             }
         });
     }
     
-    function scrollToTarget(element) {
-        const navbar = document.querySelector('.navbar');
-        const navbarHeight = navbar ? navbar.offsetHeight : 60;
-        const targetPosition = element.offsetTop - navbarHeight - 20;
-        
-        window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-        });
-    }
+    console.log('✅ Mobile navigation setup complete!');
 
     // Contact form handling
     const form = document.getElementById('contactForm'); // Use getElementById for better performance
