@@ -113,20 +113,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
                 
-                // Scroll to target with delay
+                // Scroll to target with delay, using scrollIntoView + CSS scroll-margin-top
                 setTimeout(() => {
-                    const navbar = document.querySelector('.navbar.fixed-top');
-                    const navbarHeight = navbar ? navbar.offsetHeight : 64;
-                    const rect = targetElement.getBoundingClientRect();
-                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    const targetY = rect.top + scrollTop - navbarHeight - 8; // offset for navbar
-                    
-                    console.log('📜 Scrolling to Y position:', targetY);
-                    
-                    window.scrollTo({
-                        top: targetY,
-                        behavior: 'smooth'
-                    });
+                    try {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        console.log('📜 scrollIntoView used');
+                    } catch (e) {
+                        // Fallback for very old browsers
+                        const navbar = document.querySelector('.navbar.fixed-top');
+                        const navbarHeight = navbar ? navbar.offsetHeight : 64;
+                        const rect = targetElement.getBoundingClientRect();
+                        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                        const targetY = rect.top + scrollTop - navbarHeight - 8;
+                        window.scrollTo({ top: targetY, behavior: 'smooth' });
+                        console.log('📜 window.scrollTo fallback used');
+                    }
                 }, 200);
                 
             } else {

@@ -8,6 +8,20 @@ body {
     background-color: #ffffff;
 }
 
+/* Scroll alignment tuning */
+:root {
+    --nav-height: 64px; /* desktop default */
+}
+
+@media (max-width: 991px) {
+    :root { --nav-height: 72px; } /* mobile/tabled default */
+}
+
+/* Ensure sections land neatly below fixed navbar when using scrollIntoView or anchor navigation */
+section {
+    scroll-margin-top: calc(var(--nav-height) + 12px);
+}
+
 /* Navigation Styles */
 .navbar {
     transition: all 0.3s ease;
