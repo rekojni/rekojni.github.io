@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Script loaded successfully');
+    
     // Target the element where the dynamic title will be displayed
     const dynamicTitleElement = document.getElementById('dynamic-title');
     
@@ -66,64 +68,73 @@ document.addEventListener('DOMContentLoaded', function() {
         typeTitle();
     } // End if(dynamicTitleElement)
 
-    // Smooth scrolling for navigation links
-    const navbar = document.querySelector('.navbar.fixed-top'); // Get the navbar element
-    const navbarHeight = navbar ? navbar.offsetHeight : 0; // Get its height, default to 0 if not found
-    const navbarNav = document.getElementById('navbarNav'); // Get the collapsible element
-
-    // Function to handle the scroll calculation and execution
-    function scrollToSection(targetId) {
-        const targetSection = document.getElementById(targetId);
-        if (targetSection) {
-            const targetPosition = targetSection.offsetTop - navbarHeight;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
-    }
-
-    document.querySelectorAll('a.nav-link').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+    // Mobile Navigation - Simplified and Robust
+    console.log('Setting up navigation...');
+    
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
+            console.log('Nav link clicked:', this.getAttribute('href'));
             
             const targetId = this.getAttribute('href').substring(1);
-
-            // Check if the click is inside the open mobile menu
-            const isMobileMenuOpen = navbarNav && navbarNav.classList.contains('show');
-            const isInsideMobileMenu = navbarNav && navbarNav.contains(this);
-
-            if (isMobileMenuOpen && isInsideMobileMenu) {
-                // If mobile menu is open, hide it first, then scroll after a delay
-                const collapseInstance = bootstrap.Collapse.getInstance(navbarNav);
-                if (collapseInstance) {
-                    collapseInstance.hide();
-                    // Wait for collapse animation (approx 350ms) + small buffer
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                console.log('Target element found:', targetId);
+                
+                // Close mobile menu first if it's open
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                const navbarToggler = document.querySelector('.navbar-toggler');
+                
+                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                    console.log('Closing mobile menu...');
+                    // Force close the mobile menu
+                    navbarCollapse.classList.remove('show');
+                    navbarToggler.setAttribute('aria-expanded', 'false');
+                    
+                    // Wait a moment for menu to close, then scroll
                     setTimeout(() => {
-                        scrollToSection(targetId);
-                    }, 360); 
+                        scrollToTarget(targetElement);
+                    }, 300);
                 } else {
-                     // Fallback if instance not found, scroll immediately (less ideal)
-                     scrollToSection(targetId); 
+                    // Desktop or menu already closed - scroll immediately
+                    console.log('Scrolling immediately...');
+                    scrollToTarget(targetElement);
                 }
             } else {
-                // If not mobile menu or menu closed, scroll immediately
-                 scrollToSection(targetId);
+                console.log('Target element not found:', targetId);
             }
         });
     });
-
-    // Additional mobile navigation fix - ensure menu closes on mobile
-    document.addEventListener('click', function(e) {
-        // Close mobile menu when clicking on nav links
-        if (e.target.matches('.nav-link')) {
-            const navbarCollapse = document.querySelector('.navbar-collapse');
-            if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-                // Force close the mobile menu
+    
+    // Ensure burger menu toggle works even if Bootstrap fails
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+    
+    if (navbarToggler && navbarCollapse) {
+        navbarToggler.addEventListener('click', function() {
+            const isExpanded = navbarCollapse.classList.contains('show');
+            
+            if (isExpanded) {
                 navbarCollapse.classList.remove('show');
+                navbarToggler.setAttribute('aria-expanded', 'false');
+            } else {
+                navbarCollapse.classList.add('show');
+                navbarToggler.setAttribute('aria-expanded', 'true');
             }
-        }
-    });
+        });
+    }
+    
+    function scrollToTarget(element) {
+        const navbar = document.querySelector('.navbar');
+        const navbarHeight = navbar ? navbar.offsetHeight : 60;
+        const targetPosition = element.offsetTop - navbarHeight - 20;
+        
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+    }
 
     // Contact form handling
     const form = document.getElementById('contactForm'); // Use getElementById for better performance
