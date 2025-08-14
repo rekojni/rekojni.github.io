@@ -241,15 +241,26 @@ section h2 {
     }
 }
 
-/* Project Detail Page Spacing */
+/* Project Detail Page Spacing - Modern UI/UX Principles */
 main .bg-light h2 {
-    margin-top: 2rem; /* Add space above headings */
-    margin-bottom: 1.5rem; /* Increase space below headings */
+    margin-top: 3rem; /* Increased breathing room between sections */
+    margin-bottom: 1.5rem; /* Consistent space below headings */
+}
+
+/* First h2 after main title should have less top margin */
+main .bg-light h1 + div > h2:first-of-type {
+    margin-top: 1.5rem; /* Less space for the first section header */
 }
 
 main .bg-light p {
     margin-bottom: 1.25rem; /* Increase space below paragraphs */
     line-height: 1.7;    /* Increase line spacing within paragraphs */
+}
+
+/* Add more space before h2 when it follows a list or paragraph */
+main .bg-light ul + h2,
+main .bg-light p + h2 {
+    margin-top: 3.5rem; /* Extra breathing room after content blocks */
 }
 
 main .bg-light ul {
@@ -260,11 +271,6 @@ main .bg-light ul {
 main .bg-light ul li {
     margin-bottom: 0.6rem; /* Add space between list items */
     line-height: 1.7;    /* Increase line spacing within list items */
-}
-
-/* Adjust spacing for the first heading if needed */
-main .bg-light h1 + div > h2:first-of-type {
-    margin-top: 1rem; 
 }
 
 /* Reduce bottom margin for last element in the container */
@@ -352,4 +358,10 @@ footer p {
     border-radius: 8px;
     padding: 10px 15px;
     font-size: 1rem;
+}
+
+/* Project Page Headers - Darker h2 headings */
+main .bg-light h2 {
+    color: #000000 !important; /* Pure black for maximum contrast */
+    font-weight: 600; /* Make them slightly bolder for better hierarchy */
 }
