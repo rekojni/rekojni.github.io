@@ -12,6 +12,8 @@ body {
 .hero {
     background: #1d1d1f; /* Changed to dark background */
     height: 100vh;
+    min-height: 100vh; /* Fallback for older browsers */
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
     position: relative;
     color: #f5f5f7; /* Changed default text color to light */
 }
@@ -228,6 +230,13 @@ section h2 {
 
 /* Responsive Typography */
 @media (max-width: 768px) {
+    .hero {
+        height: 100vh; /* Use standard vh on mobile for better compatibility */
+        min-height: 500px; /* Minimum height to prevent content from being too low */
+        padding-top: 60px; /* Account for navbar on mobile */
+        padding-bottom: 60px; /* Bottom padding for better visual balance */
+    }
+    
     .hero h1 {
         font-size: 40px;
     }
