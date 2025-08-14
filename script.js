@@ -113,6 +113,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Additional mobile navigation fix - ensure menu closes on mobile
+    document.addEventListener('click', function(e) {
+        // Close mobile menu when clicking on nav links
+        if (e.target.matches('.nav-link')) {
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+            if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                // Force close the mobile menu
+                navbarCollapse.classList.remove('show');
+            }
+        }
+    });
+
     // Contact form handling
     const form = document.getElementById('contactForm'); // Use getElementById for better performance
     if (form) {
