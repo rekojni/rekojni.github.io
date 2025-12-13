@@ -96,43 +96,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.preventDefault();
                 console.log('✅ Found target element!');
                 
-                // Close mobile menu (prefer Bootstrap API)
-                const mobileMenu = document.getElementById('navbarNav');
-                if (mobileMenu) {
-                    try {
-                        if (window.bootstrap && window.bootstrap.Collapse) {
-                            const instance = bootstrap.Collapse.getOrCreateInstance(mobileMenu, { toggle: false });
-                            instance.hide();
-                            console.log('📱 Mobile menu closed via Bootstrap');
-                        } else {
-                            mobileMenu.classList.remove('show');
-                            console.log('📱 Mobile menu closed via class');
-                        }
-                    } catch (err) {
-                        mobileMenu.classList.remove('show');
-                    }
-                }
-                
-                // Scroll to target with delay, using scrollIntoView + CSS scroll-margin-top
-                setTimeout(() => {
+                const doScroll = () => {
                     try {
                         targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         console.log('📜 scrollIntoView used');
                     } catch (e) {
                         // Fallback for very old browsers
                         const navbar = document.querySelector('.navbar.fixed-top');
-                        let navbarHeight = navbar ? navbar.offsetHeight : 64;
-                        // Slightly smaller offset on mobile to land headers higher
-                        if (window.matchMedia && window.matchMedia('(max-width: 991px)').matches) {
-                            navbarHeight = Math.max(48, navbarHeight - 8);
-                        }
+                        const navbarHeight = navbar ? navbar.offsetHeight : 64;
                         const rect = targetElement.getBoundingClientRect();
                         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                         const targetY = rect.top + scrollTop - navbarHeight - 8;
                         window.scrollTo({ top: targetY, behavior: 'smooth' });
                         console.log('📜 window.scrollTo fallback used');
                     }
-                }, 200);
+                };
+
+                // Close mobile menu (prefer Bootstrap API) then scroll when fully closed.
+                const mobileMenu = document.getElementById('navbarNav');
+                const isMobileMenuOpen = window.innerWidth < 992 && mobileMenu && mobileMenu.classList.contains('show');
+
+                if (isMobileMenuOpen) {
+                    try {
+                        if (window.bootstrap && window.bootstrap.Collapse) {
+                            const instance = bootstrap.Collapse.getOrCreateInstance(mobileMenu, { toggle: false });
+                            mobileMenu.addEventListener('hidden.bs.collapse', doScroll, { once: true });
+                            instance.hide();
+                            console.log('📱 Mobile menu closed via Bootstrap');
+                        } else {
+                            mobileMenu.classList.remove('show');
+                            console.log('📱 Mobile menu closed via class');
+                            requestAnimationFrame(doScroll);
+                        }
+                    } catch (err) {
+                        mobileMenu.classList.remove('show');
+                        requestAnimationFrame(doScroll);
+                    }
+                } else {
+                    doScroll();
+                }
                 
             } else {
                 // If link is hash-only (e.g., "#about") but target not on this page, go to root with hash
@@ -175,45 +177,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('✅ Mobile navigation setup complete!');
 
-    // Contact form handling
+    // Contact form handling (only integrated feedback handler below is used)
     const form = document.getElementById('contactForm'); // Use getElementById for better performance
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
-                // Check if the response indicates success (Formspree might return ok: true)
-                if (response.ok) {
-                    // Display a success message (consider using a less intrusive method than alert)
-                    alert('Thanks for your message! I will get back to you soon.'); 
-                    form.reset(); // Reset the form fields
-                } else {
-                    // Handle potential errors from the server side
-                    response.json().then(data => {
-                        // Log the error data if available
-                        console.error('Form submission error:', data);
-                        alert('Oops! There was a problem submitting your form. Please try again.');
-                    }).catch(error => {
-                        // Handle cases where the response is not JSON
-                        console.error('Form submission error, non-JSON response:', error);
-                        alert('Oops! There was a problem submitting your form. Please try again.');
-                    });
-                }
-            })
-            .catch(error => {
-                // Handle network errors
-                console.error('Network error during form submission:', error);
-                alert('Oops! There was a network problem submitting your form. Please check your connection and try again.');
-            });
-        });
-    } // End if(form)
 
     // Back to Top Button Logic
     const backToTopButton = document.getElementById('back-to-top-btn');

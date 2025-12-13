@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Project details for the Learning & Development Tracking Dashboard developed by Chun Onn Woo.">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta name="referrer-policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Project: L&D Tracking Dashboard - Chun Onn Woo</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link href="styles.css" rel="stylesheet">
+    <!-- Custom CSS (cache-busted) -->
+    <link href="styles.css?v=2025-08-15-1" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" 
           integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rekojni.github.io/lnd-dashboard-project.html">
 </head>
 <body>
 
@@ -57,7 +56,8 @@
                 </p>
                 <ul>
                     <li><strong>Automated Data Refresh:</strong> Power Query was used to fetch and clean data, replacing manual inputs and ensuring more timely updates.</li>
-                <p><strong>Key Features:</strong></p>
+                </ul>
+                <h3 class="h5 mt-3">Key Features</h3>
                 <ul>
                     <li><strong>Automated data integration:</strong> Power Query pulls from multiple sources</li>
                     <li><strong>Role-based categorisation:</strong> Mandatory, role-specific, and elective learning tracks</li>
@@ -112,39 +112,17 @@
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3">
         <div class="container">
-            <p>&copy; 2024 Chun Onn Woo. All rights reserved.</p>
+            <p>&copy; 2025 Chun Onn Woo. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous" defer></script>
     <!-- Custom JS -->
-    <script src="script.js"></script>
+    <script src="script.js?v=2025-08-15-1" defer></script>
 
-    <!-- Back to Top Button JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Back to Top Button Logic
-            const backToTopButton = document.getElementById('back-to-top-btn');
-            const scrollThreshold = 200; // Pixels scrolled before button appears
-
-            if (backToTopButton) {
-                window.addEventListener('scroll', () => {
-                    if (window.pageYOffset > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
-                        backToTopButton.classList.add('show');
-                    } else {
-                        backToTopButton.classList.remove('show');
-                    }
-                });
-
-                backToTopButton.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-            }
-        });
-    </script>
+    
 
 </body>
 </html>
