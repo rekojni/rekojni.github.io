@@ -464,3 +464,25 @@ main .bg-light h2 {
     color: #000000 !important; /* Pure black for maximum contrast */
     font-weight: 600; /* Make them slightly bolder for better hierarchy */
 }
+
+/* Status Indicator Styles */
+#status-indicator {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+#status-indicator:hover {
+    opacity: 1;
+}
+
+#status-badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 0.25rem;
+    cursor: default;
+    transition: all 0.3s ease;
+}
+
+#status-badge i {
+    margin-right: 0.25rem;
+}

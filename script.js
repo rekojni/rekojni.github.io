@@ -266,4 +266,58 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 10); // 10ms delay usually sufficient
     }
+
+    // Server/Service Status Checker
+    const statusBadge = document.getElementById('status-badge');
+    
+    if (statusBadge) {
+        // Function to check if critical services are reachable
+        async function checkServerStatus() {
+            try {
+                // Check if we can reach Formspree (contact form service)
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+                
+                const response = await fetch('https://formspree.io/ajax/forms', {
+                    method: 'HEAD',
+                    signal: controller.signal,
+                    mode: 'no-cors' // Required for cross-origin requests
+                });
+                
+                clearTimeout(timeoutId);
+                
+                // With no-cors mode, we can't read the response status, but if fetch completes without error,
+                // it means the service is reachable (even if we can't see the actual response)
+                updateStatusBadge('operational');
+            } catch (error) {
+                // Check error type for more accurate status
+                if (error.name === 'AbortError') {
+                    console.warn('Service status check timed out');
+                    updateStatusBadge('timeout');
+                } else {
+                    console.warn('Service status check failed:', error);
+                    updateStatusBadge('degraded');
+                }
+            }
+        }
+        
+        function updateStatusBadge(status) {
+            if (status === 'operational') {
+                statusBadge.className = 'badge bg-success';
+                statusBadge.innerHTML = '<i class="fas fa-check-circle"></i> All Systems Operational';
+            } else if (status === 'timeout') {
+                statusBadge.className = 'badge bg-warning text-dark';
+                statusBadge.innerHTML = '<i class="fas fa-clock"></i> Service Timeout';
+            } else {
+                statusBadge.className = 'badge bg-warning text-dark';
+                statusBadge.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Limited Connectivity';
+            }
+        }
+        
+        // Check status on page load
+        checkServerStatus();
+        
+        // Recheck status periodically (every 5 minutes)
+        setInterval(checkServerStatus, 300000);
+    }
 });
