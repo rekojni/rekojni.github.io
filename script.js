@@ -274,7 +274,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Function to check if critical services are reachable
         async function checkServerStatus() {
             try {
-                // Check if we can reach Formspree (contact form service)
+                // Attempt to reach Formspree (contact form service)
+                // Note: Using no-cors mode means we can only detect network/connection failures,
+                // not actual HTTP response status. This is a limitation of static sites.
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
                 
@@ -286,8 +288,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 clearTimeout(timeoutId);
                 
-                // With no-cors mode, we can't read the response status, but if fetch completes without error,
-                // it means the service is reachable (even if we can't see the actual response)
+                // If fetch completes without error, the service endpoint is reachable at network level.
+                // Note: This doesn't guarantee the service is fully operational, only that it's accessible.
                 updateStatusBadge('operational');
             } catch (error) {
                 // Check error type for more accurate status
